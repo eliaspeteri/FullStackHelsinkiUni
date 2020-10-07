@@ -1,5 +1,5 @@
 import axios from 'axios'
-const url = 'http://localhost:3001/api/persons'
+const url = 'https://fullstack-part-3.herokuapp.com/api/persons'
 
 const getAll = () => {
     console.log('Attempting "get"...')
