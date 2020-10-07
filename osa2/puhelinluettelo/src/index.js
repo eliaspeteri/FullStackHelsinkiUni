@@ -62,6 +62,9 @@ const hook = () => {
     .getAll()
     .then(response => {
       setPersons(response.data)
+    if (response.status === 200) {
+      console.log('"get" successful')
+    }
     })
 }
 
@@ -70,28 +73,19 @@ useEffect(hook,[])
 
 // addName-function handles compiling the information from the PersonForm component to be compiled into a new object which will be pushed back into the JSON server
 const addName = (event) => {
-  let duplicate = false
   event.preventDefault()
-
   const personObject = {
     name: newName,
-    number: newNumber,
-    id: persons.length + 1
+    number: newNumber
   }
-
-  for (let index = 0; index < persons.length; index++) {
-    if (newName === persons[index].name)
-    { 
-      duplicate = true
-    }
-  }
-  if(!duplicate && newName !== "") {
+  
     console.log(newName);
     personService
       .create(personObject)
       .then(returnedPerson => {
         setPersons(persons.concat(returnedPerson))
         setNewName('')
+        console.log('"post" successful')
       })
       .catch(error => {
         setErrorMessage(
@@ -100,9 +94,8 @@ const addName = (event) => {
         setTimeout(() => {
           setErrorMessage(null)
         },5000)
-        setPersons(persons.filter(p => p.id !== id))
       })
-}
+
 }
 
 // handleNameChange updates the state to match what's written into the name input box in PersonForm
