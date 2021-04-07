@@ -11,14 +11,7 @@ const totalLikes = (blogs) => {
 };
 
 const favoriteBlog = (blogs) => {
-    let favoriteBlog = {
-        _id: "5a422a851b54a676234d17f7",
-        title: "React patterns",
-        author: "Michael Chan",
-        url: "https://reactpatterns.com/",
-        likes: 7,
-        __v: 0,
-    };
+    let favoriteBlog = blogs[0];
     for (const blog of blogs) {
         if (blog["likes"] >= favoriteBlog["likes"]) favoriteBlog = blog;
     }
