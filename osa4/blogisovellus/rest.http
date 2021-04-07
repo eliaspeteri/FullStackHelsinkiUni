@@ -1,0 +1,15 @@
+POST http://localhost:3003/api/blogs
+Content-Type:application/json
+
+{
+    "title":"Hello World",
+    "author":"Elias",
+    "url":"",
+    "likes":1
+}
+
+###
+GET http://localhost:3003/api/blogs
+Content-Type: application/json
+
+DELETE http://localhost:3003/api/blogs
