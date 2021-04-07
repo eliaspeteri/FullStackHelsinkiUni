@@ -3,11 +3,11 @@ const dummy = (blogs) => {
 };
 
 const totalLikes = (blogs) => {
-    const reducer = (sum, item) => {
-        return sum + item;
-    };
-
-    return blogs.length === 0 ? 0 : blogs.reduce(reducer, 0);
+    let likesSum = 0;
+    for (const blog of blogs) {
+        likesSum += blog["likes"];
+    }
+    return likesSum;
 };
 
 module.exports = {
