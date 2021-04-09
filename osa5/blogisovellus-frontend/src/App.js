@@ -66,9 +66,27 @@ const App = () => {
     };
 
     const addBlog = async (blogObject) => {
-        blogFormRef.current.toggleVisibility();
         await blogService.create(blogObject);
         blogs.push(blogObject);
+        setErrorMessage(
+            `Successfully added blog ${blogObject.title} by ${blogObject.author}.`
+        );
+    };
+
+    const removeBlog = async (id) => {
+        try {
+            setErrorMessage("Successfully removed blog.");
+            setTimeout(() => {
+                setErrorMessage(null);
+            }, 5000);
+            blogService.getAll().then((blogs) => setBlogs(blogs));
+        } catch (e) {
+            setErrorMessage("Error removing blog.");
+            setTimeout(() => {
+                setErrorMessage(null);
+            }, 5000);
+        }
+        await blogService.remove(id);
     };
 
     return (
@@ -82,11 +100,17 @@ const App = () => {
             ) : (
                 <div>
                     <p>{user.name} logged in</p>
-                    <button onClick={logoutBlog}>Logout</button>
+                    <button onClick={logoutBlog} id="logout-button">
+                        Logout
+                    </button>
                     {blogForm()}
                     <h2>Blogs</h2>
                     {blogs.map((blog) => (
-                        <Blog key={blog.id} blog={blog} />
+                        <Blog
+                            key={blog.id}
+                            blog={blog}
+                            removeBlog={removeBlog}
+                        />
                     ))}
                 </div>
             )}

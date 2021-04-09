@@ -15,16 +15,33 @@ const BlogForm = ({ createBlog }) => {
         setNewBlog({ title: "", author: "", url: "" });
     };
 
+    const labelStyle = {
+        display: "inline-block",
+        width: "10%",
+        textAlign: "right",
+    };
+
+    const inputStyle = {
+        display: "inline-block",
+    };
+
+    const formStyle = {
+        marginRight: "50%",
+    };
+
     return (
-        <div>
+        <div className="formDiv">
             <h2>Add a new blog</h2>
 
-            <form onSubmit={addBlog}>
+            <form onSubmit={addBlog} style={formStyle}>
                 <div>
-                    <label for="title">Title&nbsp;</label>
+                    <label htmlFor="title" style={labelStyle}>
+                        Title&nbsp;
+                    </label>
                     <input
                         id="title"
                         value={newBlog.title}
+                        style={inputStyle}
                         onChange={({ target }) => {
                             setNewBlog({
                                 title: target.value,
@@ -35,10 +52,13 @@ const BlogForm = ({ createBlog }) => {
                     />
                 </div>
                 <div>
-                    <label for="author">Author&nbsp;</label>
+                    <label htmlFor="author" style={labelStyle}>
+                        Author&nbsp;
+                    </label>
                     <input
                         id="author"
                         value={newBlog.author}
+                        style={inputStyle}
                         onChange={({ target }) => {
                             setNewBlog({
                                 title: newBlog.title,
@@ -49,10 +69,13 @@ const BlogForm = ({ createBlog }) => {
                     />
                 </div>
                 <div>
-                    <label for="url">Url&nbsp;</label>
+                    <label htmlFor="url" style={labelStyle}>
+                        Url&nbsp;
+                    </label>
                     <input
                         id="url"
                         value={newBlog.url}
+                        style={inputStyle}
                         onChange={({ target }) => {
                             setNewBlog({
                                 title: newBlog.title,

@@ -2,6 +2,7 @@ const blogsRouter = require("express").Router();
 const Blog = require("../models/blog");
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
+
 blogsRouter.get("/", async (request, response) => {
     const blogs = await Blog.find({}).populate("user", {
         username: 1,
@@ -42,6 +43,15 @@ blogsRouter.post("/", async (request, response) => {
     await user.save();
 
     response.json(savedBlog.toJSON());
+});
+
+blogsRouter.delete("/:id", async (request, response) => {
+    try {
+        await Blog.findByIdAndRemove(request.params.id);
+        response.status(204);
+    } catch (e) {
+        console.log(e);
+    }
 });
 
 module.exports = blogsRouter;

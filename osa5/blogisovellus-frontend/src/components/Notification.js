@@ -1,3 +1,4 @@
+import React from "react";
 // Notification component to handle informing the user of a successful operation
 const Notification = ({ message }) => {
     if (message === null) {
