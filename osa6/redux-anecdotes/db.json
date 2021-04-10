@@ -3,7 +3,7 @@
     {
       "content": "Ei tippa tapa vieläkään",
       "id": 1,
-      "votes": 9
+      "votes": 22
     },
     {
       "content": "Adding manpower to a late software project makes it later!",
@@ -44,6 +44,20 @@
       "content": "dfgh",
       "votes": 0,
       "id": 9
+    },
+    {
+      "votes": 0,
+      "id": 10
+    },
+    {
+      "content": "",
+      "votes": 0,
+      "id": 11
+    },
+    {
+      "content": "fg",
+      "votes": 0,
+      "id": 12
     }
   ]
 }
