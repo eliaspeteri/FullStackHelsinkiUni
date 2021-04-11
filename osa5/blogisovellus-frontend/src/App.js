@@ -1,22 +1,29 @@
+// Dependencies
 import React, { useState, useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
+// Services
 import blogService from "./services/blogs";
 import loginService from "./services/login";
-import Blog from "./components/Blog";
+// Components
 import BlogForm from "./components/BlogForm";
+import Blogs from "./components/Blogs";
 import LoginForm from "./components/LoginForm";
 import Notification from "./components/Notification";
 import Togglable from "./components/Togglable";
+// Action creators
+import { initializeBlogs } from "./reducers/blogReducer";
+import { setNotification } from "./reducers/notificationReducer";
 
 const App = () => {
-    const [blogs, setBlogs] = useState([]);
-    const [errorMessage, setErrorMessage] = useState(null);
+    const dispatch = useDispatch((state) => state);
+
     const [user, setUser] = useState(null);
 
     const blogFormRef = useRef();
 
     useEffect(() => {
-        blogService.getAll().then((blogs) => setBlogs(blogs));
-    }, []);
+        dispatch(initializeBlogs());
+    }, [dispatch]);
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem("loggedBlogappUser");
@@ -39,7 +46,7 @@ const App = () => {
 
     const blogForm = () => (
         <Togglable buttonLabel="new blog" ref={blogFormRef}>
-            <BlogForm createBlog={addBlog} />
+            <BlogForm />
         </Togglable>
     );
 
@@ -53,10 +60,7 @@ const App = () => {
                 JSON.stringify(user)
             );
         } catch (e) {
-            setErrorMessage("wrong credentials");
-            setTimeout(() => {
-                setErrorMessage(null);
-            }, 5000);
+            dispatch(setNotification("wrong credentials."), 5);
         }
     };
 
@@ -65,35 +69,11 @@ const App = () => {
         window.localStorage.removeItem("loggedBlogappUser");
     };
 
-    const addBlog = async (blogObject) => {
-        await blogService.create(blogObject);
-        blogs.push(blogObject);
-        setErrorMessage(
-            `Successfully added blog ${blogObject.title} by ${blogObject.author}.`
-        );
-    };
-
-    const removeBlog = async (id) => {
-        try {
-            setErrorMessage("Successfully removed blog.");
-            setTimeout(() => {
-                setErrorMessage(null);
-            }, 5000);
-            blogService.getAll().then((blogs) => setBlogs(blogs));
-        } catch (e) {
-            setErrorMessage("Error removing blog.");
-            setTimeout(() => {
-                setErrorMessage(null);
-            }, 5000);
-        }
-        await blogService.remove(id);
-    };
-
     return (
         <div>
             <h1>Blogs</h1>
 
-            <Notification message={errorMessage} />
+            <Notification />
 
             {user === null ? (
                 loginForm()
@@ -104,14 +84,7 @@ const App = () => {
                         Logout
                     </button>
                     {blogForm()}
-                    <h2>Blogs</h2>
-                    {blogs.map((blog) => (
-                        <Blog
-                            key={blog.id}
-                            blog={blog}
-                            removeBlog={removeBlog}
-                        />
-                    ))}
+                    <Blogs />
                 </div>
             )}
         </div>

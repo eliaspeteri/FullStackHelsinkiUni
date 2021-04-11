@@ -1,16 +1,20 @@
-import React, { useState } from "react";
+// Dependencies
+import React from "react";
 import PropTypes from "prop-types";
+// Hooks
+import useField from "../hooks/index";
+
 const LoginForm = ({ login }) => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const username = useField("text");
+    const password = useField("password");
 
     const addLogin = (event) => {
         event.preventDefault();
 
-        login({ username, password });
+        login({ username: username.value, password: password.value });
 
-        setUsername("");
-        setPassword("");
+        username.onReset();
+        password.onReset();
     };
 
     return (
@@ -21,24 +25,20 @@ const LoginForm = ({ login }) => {
                     <label htmlFor="username">username&nbsp;</label>
                     <input
                         type="text"
-                        value={username}
+                        value={username.value}
                         name="Username"
                         id="username"
-                        onChange={({ target }) => {
-                            setUsername(target.value);
-                        }}
+                        onChange={username.onChange}
                     />
                 </div>
                 <div>
                     <label htmlFor="password">password&nbsp;</label>
                     <input
                         type="password"
-                        value={password}
+                        value={password.value}
                         name="Password"
                         id="password"
-                        onChange={({ target }) => {
-                            setPassword(target.value);
-                        }}
+                        onChange={password.onChange}
                     />
                 </div>
                 <button type="submit" id="login-button">

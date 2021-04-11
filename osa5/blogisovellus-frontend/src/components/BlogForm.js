@@ -1,18 +1,41 @@
-import React, { useState } from "react";
+// Dependencies
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+// Services
+import blogService from "../services/blogs";
+// Action creators
+import { setNotification } from "../reducers/notificationReducer";
+// Hooks
+import useField from "../hooks/index";
 
-const BlogForm = ({ createBlog }) => {
-    const [newBlog, setNewBlog] = useState({ title: "", author: "", url: "" });
+const BlogForm = () => {
+    const title = useField("text");
+    const author = useField("text");
+    const url = useField("text");
 
-    const addBlog = (event) => {
+    const dispatch = useDispatch();
+    const blogs = useSelector((state) => state.blogs);
+
+    const addBlog = async (event) => {
         event.preventDefault();
 
-        createBlog({
-            title: newBlog.title,
-            author: newBlog.author,
-            url: newBlog.url,
-        });
+        const blogObject = {
+            title: title.value,
+            author: author.value,
+            url: url.value,
+        };
 
-        setNewBlog({ title: "", author: "", url: "" });
+        await blogService.create(blogObject);
+        blogs.push(blogObject);
+        dispatch(
+            setNotification(
+                `Successfully added blog ${blogObject.title} by ${blogObject.author}.`,
+                5
+            )
+        );
+        title.onReset();
+        author.onReset();
+        url.onReset();
     };
 
     const labelStyle = {
@@ -40,15 +63,9 @@ const BlogForm = ({ createBlog }) => {
                     </label>
                     <input
                         id="title"
-                        value={newBlog.title}
+                        value={title.value}
                         style={inputStyle}
-                        onChange={({ target }) => {
-                            setNewBlog({
-                                title: target.value,
-                                author: newBlog.author,
-                                url: newBlog.url,
-                            });
-                        }}
+                        onChange={title.onChange}
                     />
                 </div>
                 <div>
@@ -57,15 +74,9 @@ const BlogForm = ({ createBlog }) => {
                     </label>
                     <input
                         id="author"
-                        value={newBlog.author}
+                        value={author.value}
                         style={inputStyle}
-                        onChange={({ target }) => {
-                            setNewBlog({
-                                title: newBlog.title,
-                                author: target.value,
-                                url: newBlog.url,
-                            });
-                        }}
+                        onChange={author.onChange}
                     />
                 </div>
                 <div>
@@ -74,15 +85,9 @@ const BlogForm = ({ createBlog }) => {
                     </label>
                     <input
                         id="url"
-                        value={newBlog.url}
+                        value={url.value}
                         style={inputStyle}
-                        onChange={({ target }) => {
-                            setNewBlog({
-                                title: newBlog.title,
-                                author: newBlog.author,
-                                url: target.value,
-                            });
-                        }}
+                        onChange={url.onChange}
                     />
                 </div>
                 <button type="submit">save</button>

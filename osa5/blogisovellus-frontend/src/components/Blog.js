@@ -1,5 +1,9 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addLike } from "../reducers/blogReducer";
+import { setNotification } from "../reducers/notificationReducer";
 const Blog = ({ blog, removeBlog, userId }) => {
+    const dispatch = useDispatch();
     const [showFullBlog, setShowFullBlog] = useState(false);
 
     const toggleVisibility = () => {
@@ -40,7 +44,20 @@ const Blog = ({ blog, removeBlog, userId }) => {
                     <div>
                         Likes:&nbsp;
                         {blog.likes}
-                        <button className="likeButton">Like</button>
+                        <button
+                            className="likeButton"
+                            onClick={() => {
+                                dispatch(addLike(blog.id, blog));
+                                dispatch(
+                                    setNotification(
+                                        `You liked ${blog.title}!`,
+                                        5
+                                    )
+                                );
+                            }}
+                        >
+                            Like
+                        </button>
                     </div>
                     {userId === blog.userId ? (
                         <button
@@ -49,7 +66,13 @@ const Blog = ({ blog, removeBlog, userId }) => {
                                 window.confirm(
                                     `Remove blog ${blog.title} by ${blog.author} ?`
                                 )
-                                    ? removeBlog(blog.id)
+                                    ? removeBlog(blog.id) &&
+                                      dispatch(
+                                          setNotification(
+                                              `Removed blog '${blog.title}'.`,
+                                              5
+                                          )
+                                      )
                                     : null
                             }
                         >
