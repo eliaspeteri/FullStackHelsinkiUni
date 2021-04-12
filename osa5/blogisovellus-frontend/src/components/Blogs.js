@@ -1,5 +1,5 @@
 // Dependencies
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // Components
 import Blog from "./Blog";
@@ -7,10 +7,15 @@ import Blog from "./Blog";
 import blogService from "../services/blogs";
 // Action creators
 import { setNotification } from "../reducers/notificationReducer";
+import { initializeBlogs } from "../reducers/blogReducer";
 
 const Blogs = () => {
     const dispatch = useDispatch();
     const blogs = useSelector((state) => state.blogs);
+
+    useEffect(() => {
+        dispatch(initializeBlogs());
+    }, [dispatch]);
 
     const removeBlog = async (id) => {
         try {

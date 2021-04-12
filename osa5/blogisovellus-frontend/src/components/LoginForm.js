@@ -2,7 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 // Hooks
-import useField from "../hooks/index";
+import { useField } from "../hooks/index";
 
 const LoginForm = ({ login }) => {
     const username = useField("text");

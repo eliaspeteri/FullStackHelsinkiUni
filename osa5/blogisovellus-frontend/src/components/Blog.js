@@ -1,7 +1,10 @@
+// Dependencies
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+// Action creators
 import { addLike } from "../reducers/blogReducer";
 import { setNotification } from "../reducers/notificationReducer";
+
 const Blog = ({ blog, removeBlog, userId }) => {
     const dispatch = useDispatch();
     const [showFullBlog, setShowFullBlog] = useState(false);
@@ -25,15 +28,16 @@ const Blog = ({ blog, removeBlog, userId }) => {
                     style={{ cursor: "pointer" }}
                     className="titleAuthor"
                 >
+                    <span>{blog.title}</span>
+                    &nbsp;by&nbsp;
+                    <span>{blog.author}</span>
+                    &nbsp;
                     <button
                         onClick={toggleVisibility}
                         className="showFullBlogButton"
                     >
                         {showFullBlog ? "hide" : "show"}
                     </button>
-                    <span>{blog.title}</span>
-                    &nbsp;by&nbsp;
-                    <span>{blog.author}</span>
                 </div>
             </div>
             {showFullBlog ? (
@@ -79,6 +83,7 @@ const Blog = ({ blog, removeBlog, userId }) => {
                             remove
                         </button>
                     ) : null}
+                    <div>id:&nbsp;{blog.id}</div>
                 </div>
             ) : null}
         </div>

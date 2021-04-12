@@ -6,7 +6,7 @@ import blogService from "../services/blogs";
 // Action creators
 import { setNotification } from "../reducers/notificationReducer";
 // Hooks
-import useField from "../hooks/index";
+import { useField } from "../hooks/index";
 
 const BlogForm = () => {
     const title = useField("text");
@@ -23,6 +23,7 @@ const BlogForm = () => {
             title: title.value,
             author: author.value,
             url: url.value,
+            likes: 0,
         };
 
         await blogService.create(blogObject);
