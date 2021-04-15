@@ -1,6 +1,6 @@
-// Services
-import blogService from "../services/blogs";
-
+// Hooks
+import useResource from "../hooks/useResource";
+const blogService = useResource("/api/blogs");
 /* eslint-disable indent */
 const blogReducer = (state = [], action) => {
     switch (action.type) {

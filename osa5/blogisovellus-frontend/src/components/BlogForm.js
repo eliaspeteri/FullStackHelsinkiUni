@@ -1,12 +1,11 @@
 // Dependencies
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-// Services
-import blogService from "../services/blogs";
 // Action creators
 import { setNotification } from "../reducers/notificationReducer";
 // Hooks
-import { useField } from "../hooks/index";
+import { useField } from "../hooks";
+import { createBlog } from "../reducers/blogReducer";
 
 const BlogForm = () => {
     const title = useField("text");
@@ -26,7 +25,8 @@ const BlogForm = () => {
             likes: 0,
         };
 
-        await blogService.create(blogObject);
+        // await blogService.create(blogObject);
+        dispatch(createBlog(blogObject));
         blogs.push(blogObject);
         dispatch(
             setNotification(

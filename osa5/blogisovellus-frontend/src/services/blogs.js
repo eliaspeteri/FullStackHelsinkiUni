@@ -7,6 +7,11 @@ const setToken = (newToken) => {
     token = `bearer ${newToken}`;
 };
 
+const getToken = () => {
+    if (token === null) return "No token.";
+    return token;
+};
+
 const getAll = async () => {
     const response = await axios.get(baseUrl);
     return response.data;
@@ -31,4 +36,4 @@ const remove = async (id) => {
     await axios.delete(`${baseUrl}/${id}`);
 };
 
-export default { getAll, create, update, remove, setToken };
+export default { getAll, create, update, remove, setToken, getToken };

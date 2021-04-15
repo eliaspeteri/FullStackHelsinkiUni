@@ -3,16 +3,25 @@ import React from "react";
 import PropTypes from "prop-types";
 // Hooks
 import { useField } from "../hooks/index";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../reducers/loginReducer";
 
-const LoginForm = ({ login }) => {
+const LoginForm = () => {
+    const dispatch = useDispatch();
+
     const username = useField("text");
     const password = useField("password");
 
     const addLogin = (event) => {
         event.preventDefault();
 
-        login({ username: username.value, password: password.value });
+        const loginObject = {
+            username: username.value,
+            password: password.value,
+        };
 
+        // login(loginObject);
+        dispatch(loginUser(loginObject));
         username.onReset();
         password.onReset();
     };

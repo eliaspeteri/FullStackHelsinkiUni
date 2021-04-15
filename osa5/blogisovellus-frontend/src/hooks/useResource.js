@@ -1,12 +1,6 @@
 import axios from "axios";
 
 const useResource = (baseUrl) => {
-    let token = null;
-
-    const setToken = (newToken) => {
-        token = `bearer ${newToken}`;
-    };
-
     const getAll = async () => {
         const response = await axios.get(baseUrl);
         return response.data;
@@ -17,14 +11,22 @@ const useResource = (baseUrl) => {
         return response.data;
     };
 
-    const create = async (object) => {
+    const create = async (object, token) => {
+        if (token === null) {
+            const user = window.localStorage.getItem("loggedBlogappUser");
+            token = user.token;
+        }
         const config = { headers: { Authorization: token } };
 
         const response = await axios.post(baseUrl, object, config);
         return response.data;
     };
 
-    const update = async (id, object) => {
+    const update = async (id, object, token) => {
+        if (token === null) {
+            const user = window.localStorage.getItem("loggedBlogappUser");
+            token = user.token;
+        }
         const config = { headers: { Authorization: token } };
         const response = await axios.put(`${baseUrl}/${id}`, object, config);
         return response.data;
@@ -40,7 +42,6 @@ const useResource = (baseUrl) => {
         create,
         update,
         remove,
-        setToken,
     };
 };
 

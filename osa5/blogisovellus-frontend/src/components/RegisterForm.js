@@ -1,6 +1,6 @@
 // Dependencies
 import React from "react";
-import PropTypes from "prop-types";
+import propTypes from "prop-types";
 // Hooks
 import { useField } from "../hooks";
 import { Link } from "react-router-dom";
@@ -50,8 +50,8 @@ const RegisterForm = ({ register }) => {
     );
 };
 
-RegisterForm.PropTypes = {
-    register: PropTypes.func.isRequired,
+RegisterForm.propTypes = {
+    register: propTypes.func.isRequired,
 };
 
 export default RegisterForm;
