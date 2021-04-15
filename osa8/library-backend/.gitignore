@@ -1,2 +1,5 @@
 /node_modules
 /.vscode
+.env
+URI.js
+JWT_SECRET.js

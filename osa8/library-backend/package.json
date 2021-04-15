@@ -10,12 +10,15 @@
     "keywords": [
         "graphql",
         "gql",
-        "rest"
+        "mongodb",
+        "mongoose"
     ],
     "author": "Elias Peteri",
     "license": "ISC",
     "dependencies": {
         "apollo-server": "^2.23.0",
-        "graphql": "^15.5.0"
+        "graphql": "^15.5.0",
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "^5.12.3"
     }
 }
