@@ -6,14 +6,15 @@ const Books = (props) => {
     const result = useQuery(ALL_BOOKS, {
         onError: (error) => props.setError(error.graphQLErrors[0].message),
     });
-    let books = [];
 
     if (!props.show) {
         return null;
     }
 
-    if (!result.loading) {
+    let books = [];
+    if (result.data) {
         books = result.data.allBooks;
+        console.log(books);
     }
 
     return (
@@ -23,14 +24,14 @@ const Books = (props) => {
             <table>
                 <tbody>
                     <tr>
-                        <th></th>
+                        <th>book</th>
                         <th>author</th>
                         <th>published</th>
                     </tr>
                     {books.map((a) => (
                         <tr key={a.title}>
                             <td>{a.title}</td>
-                            <td>{a.author}</td>
+                            <td>{a.author.name}</td>
                             <td>{a.published}</td>
                         </tr>
                     ))}

@@ -1,20 +1,16 @@
-// Apollo Server
+// Apollo Server dependencies
 const { ApolloServer } = require("apollo-server");
 const typeDefs = require("./typeDefs");
 const resolvers = require("./resolvers");
-// Mongo
+// MongoDB dependencies
 const mongoose = require("mongoose");
 
 const User = require("./models/user");
 const URI = require("./URI");
+
 // JWT
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = require("./JWT_SECRET");
-
-/*
- * Saattaisi olla järkevämpää assosioida kirja ja sen tekijä tallettamalla kirjan yhteyteen tekijän nimen sijaan tekijän id
- * Yksinkertaisuuden vuoksi tallennamme kuitenkin kirjan yhteyteen tekijän nimen
- */
 
 // MongoDB Connection
 const MONGODB_URI = `mongodb+srv://fullstack:${URI}@cluster0.x3oih.mongodb.net/library?retryWrites=true&w=majority`;
@@ -31,7 +27,7 @@ mongoose
         console.log("error connecting to MongoDB:", error.message);
     });
 
-// Apollo Server
+// Apollo Server connection
 const server = new ApolloServer({
     typeDefs,
     resolvers,
@@ -45,6 +41,7 @@ const server = new ApolloServer({
     },
 });
 
-server.listen().then(({ url }) => {
+server.listen().then(({ url, subscriptionsUrl }) => {
     console.log(`Server ready at ${url}`);
+    console.log(`Subscriptions ready at ${subscriptionsUrl}`);
 });

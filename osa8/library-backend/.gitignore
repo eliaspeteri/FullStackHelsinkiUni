@@ -1,5 +1,6 @@
 /node_modules
 /.vscode
+/typeDefs
 .env
 URI.js
 JWT_SECRET.js

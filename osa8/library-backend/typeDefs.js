@@ -6,6 +6,7 @@ const typeDefs = gql`
         id: ID!
         born: Int
         bookCount: Int
+        books: [Book!]!
     }
 
     type Book {
@@ -18,6 +19,7 @@ const typeDefs = gql`
 
     type User {
         username: String!
+        favoriteGenre: String!
         id: ID!
     }
 
@@ -26,23 +28,31 @@ const typeDefs = gql`
     }
 
     type Query {
-        me: User
         bookCount: Int!
         authorCount: Int!
         allBooks(author: String, genre: String): [Book!]!
         allAuthors: [Author!]!
+        findAuthor(name: String): Author!
+        findBooks(author: String): Book
+        me: User
     }
 
     type Mutation {
-        createUser(username: String!): User
-        login(username: String!, password: String!): Token
         addBook(
             title: String!
             published: Int
             author: String!
             genres: [String!]!
         ): Book
+        addAuthor(name: String!, born: Int): Author
         editAuthor(name: String!, setBornTo: Int!): Author
+        createUser(username: String!): User
+        editUser(username: String!, favoriteGenre: String!): User
+        login(username: String!, password: String!): Token
+    }
+
+    type Subscription {
+        bookAdded: Book!
     }
 `;
 
