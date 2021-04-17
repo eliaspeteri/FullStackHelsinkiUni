@@ -2,72 +2,66 @@ import React from "react";
 import { Props } from "../types";
 import Part from "./Part";
 
+/** @param courseParts Course content */
 const Content = ({ courseParts }: Props): JSX.Element => {
-    // const assertNever = (value: never): never => {
-    //     throw new Error(
-    //         `Unhandled discriminated union member: ${JSON.stringify(value)}`
-    //     );
-    // };
+    const assertNever = (value: never): never => {
+        throw new Error(
+            `Unhandled discriminated union member: ${JSON.stringify(value)}`
+        );
+    };
     return (
         <div>
             {courseParts?.map((part) => {
                 switch (part.name) {
                     case "Fundamentals":
                         return (
-                            <div>
-                                <Part
-                                    key={part.name}
-                                    name={part.name}
-                                    exerciseCount={part.exerciseCount}
-                                    description={part.description}
-                                />
-                            </div>
+                            <Part
+                                key={part.name}
+                                name={part.name}
+                                exerciseCount={part.exerciseCount}
+                                description={part.description}
+                            />
                         );
                     case "Advanced":
                         return (
-                            <div>
-                                <Part
-                                    key={part.name}
-                                    name={part.name}
-                                    exerciseCount={part.exerciseCount}
-                                    description={part.description}
-                                />
-                            </div>
+                            <Part
+                                key={part.name}
+                                name={part.name}
+                                exerciseCount={part.exerciseCount}
+                                description={part.description}
+                            />
                         );
                     case "Using props to pass data":
                         return (
-                            <div>
-                                <Part
-                                    key={part.name}
-                                    name={part.name}
-                                    exerciseCount={part.exerciseCount}
-                                />
-                            </div>
+                            <Part
+                                key={part.name}
+                                name={part.name}
+                                exerciseCount={part.exerciseCount}
+                                description={part.description}
+                                groupProjectCount={part.groupProjectCount}
+                            />
                         );
                     case "Deeper type usage":
                         return (
-                            <div>
-                                <Part
-                                    key={part.name}
-                                    name={part.name}
-                                    exerciseCount={part.exerciseCount}
-                                    description={part.description}
-                                />
-                            </div>
+                            <Part
+                                key={part.name}
+                                name={part.name}
+                                exerciseCount={part.exerciseCount}
+                                description={part.description}
+                                link={part.exerciseSubmissionLink}
+                            />
                         );
                     case "Backend development":
                         return (
-                            <div>
-                                <Part
-                                    key={part.name}
-                                    name={part.name}
-                                    exerciseCount={part.exerciseCount}
-                                    description={part.description}
-                                />
-                            </div>
+                            <Part
+                                key={part.name}
+                                name={part.name}
+                                description={part.description}
+                                requirements={part.requirements}
+                            />
                         );
                     default:
-                        break;
+                    // assertNever(part);
                 }
             })}
         </div>
