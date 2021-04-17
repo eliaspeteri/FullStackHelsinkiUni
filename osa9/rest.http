@@ -1,0 +1,19 @@
+### WebBmi with query parameters
+GET http://localhost:3003/bmi?weight=95&height=185
+Content-Type: application/json
+
+### WebExercises
+POST http://localhost:3003/exercises
+Content-Type: application/json
+
+{
+    "daily_exercises": [1,0,2,0,3,0,2.5],
+    "target":2.5
+}
+### WebExercises with an empty object
+POST http://localhost:3003/exercises
+Content-Type: application/json
+
+{
+   
+}

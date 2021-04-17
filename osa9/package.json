@@ -8,14 +8,25 @@
         "ts-node": "ts-node",
         "multiply": "ts-node multiplier.ts",
         "calculate": "ts-node calculator.ts",
+        "start": "ts-node index.ts",
+        "dev": "ts-node-dev index.ts",
+        "lint": "eslint --ext .ts .",
         "bmiCalculator": "ts-node bmiCalculator.ts",
         "exerciseCalculator": "ts-node exerciseCalculator.ts"
     },
     "author": "Elias Peteri",
     "license": "ISC",
     "devDependencies": {
+        "@types/express": "^4.17.11",
         "@types/node": "^14.14.41",
+        "@typescript-eslint/eslint-plugin": "^4.22.0",
+        "@typescript-eslint/parser": "^4.22.0",
+        "eslint": "^7.24.0",
         "ts-node": "^9.1.1",
+        "ts-node-dev": "^1.1.6",
         "typescript": "^4.2.4"
+    },
+    "dependencies": {
+        "express": "^4.17.1"
     }
 }
