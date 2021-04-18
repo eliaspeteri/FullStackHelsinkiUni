@@ -4,11 +4,11 @@ GET http://localhost:3001/api/ping
 ### Patients
 GET http://localhost:3001/api/patients
 
-### Patients sensitive information
-GET http://localhost:3001/api/patients?sensitive=true
-
-### Patient By ID
+### Patient by ID
 GET http://localhost:3001/api/patients/d2773336-f723-11e9-8f0b-362b9e155667
+
+### Patient entries by ID (Dana Scully)
+GET http://localhost:3001/api/patients/d2773822-f723-11e9-8f0b-362b9e155667/entries
 
 ### Add new Patient
 POST http://localhost:3001/api/patients
@@ -20,6 +20,18 @@ Content-Type: application/json
     "ssn":"010100-123A",
     "gender":"male",
     "occupation":"Student"
+}
+
+### Add new Patient entry by ID of type HealthCheck (John McClane)
+POST http://localhost:3001/api/patients/d2773336-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+
+{
+    "date":"2021-04-18",
+    "specialist":"MD House",
+    "type":"HealthCheck",
+    "description":"Annual control visit. Little bit overweight, will be recommended a better diet.",
+    "healthCheckRating":1
 }
 
 ### Diagnoses

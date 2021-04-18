@@ -1,11 +1,17 @@
 import patients from "../data/patients";
-import { Patient, PatientSafe, NewPatientEntry } from "../types";
+import {
+    Patient,
+    PatientSafe,
+    NewPatientEntry,
+    // NewDialogEntry,
+    Entry,
+} from "../types";
 import { v1 as uuid } from "uuid";
-const getEntries = (): Patient[] => {
+const getPatients = (): Patient[] => {
     return patients;
 };
 
-const getNonSensitiveEntries = (): PatientSafe[] => {
+const getPatientsSafe = (): PatientSafe[] => {
     return patients.map(({ id, name, dateOfBirth, gender, occupation }) => ({
         id,
         name,
@@ -15,10 +21,15 @@ const getNonSensitiveEntries = (): PatientSafe[] => {
     }));
 };
 
+const getEntries = (id: string): Entry[] | undefined => {
+    const patient = patients.find((p) => p.id === id);
+    return patient?.entries;
+};
+
 const addEntry = (entry: NewPatientEntry): Patient => {
-    const id = uuid(); // eslint-disable-line
+    const id = uuid();
     const newPatientEntry = {
-        id: id, // eslint-disable-line
+        id: id,
         ...entry,
     };
 
@@ -26,14 +37,27 @@ const addEntry = (entry: NewPatientEntry): Patient => {
     return newPatientEntry;
 };
 
+// const addDialogEntry = (entry: NewDialogEntry): Entry[] | undefined => {
+//     const id = uuid();
+//     const newDialogEntry = {
+//         id: id,
+//         ...entry,
+//     };
+//     const patient = patients.find((p) => p.id === id);
+//     patient?.entries.push(newDialogEntry);
+//     return patient?.entries;
+// };
+
 const findById = (id: string): Patient | undefined => {
     const patient = patients.find((p) => p.id === id);
     return patient;
 };
 
 export default {
+    getPatients,
+    getPatientsSafe,
     getEntries,
-    getNonSensitiveEntries,
     addEntry,
+    // addDialogEntry,
     findById,
 };

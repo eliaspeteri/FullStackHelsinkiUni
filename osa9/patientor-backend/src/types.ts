@@ -65,3 +65,5 @@ interface HealthCheckEntry extends BaseEntry {
 export type PatientSafe = Omit<Patient, "ssn" | "entries">;
 
 export type NewPatientEntry = Omit<Patient, "id">;
+
+export type NewDialogEntry = Omit<Entry, "id">;
