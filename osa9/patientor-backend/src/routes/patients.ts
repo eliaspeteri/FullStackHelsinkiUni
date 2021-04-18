@@ -15,8 +15,10 @@ router.get("/", (req, res) => {
 
 router.get("/:id", (req, res) => {
     const patient = patientService.findById(req.params.id);
-    if (patient) res.send(patient);
-    else res.sendStatus(404);
+    if (patient) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.send(patient);
+    } else res.sendStatus(404);
 });
 
 router.post("/", (req, res) => {
