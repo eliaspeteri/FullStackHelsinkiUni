@@ -3,13 +3,12 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { apiBaseUrl } from "../constants";
 import { Patient } from "../types";
-import { setPatientPage, useStateValue } from "../state";
-import { Icon } from "semantic-ui-react";
-const PatientPage = () => {
-    const [patients, dispatch] = useStateValue();
-    const { id } = useParams<{ id: string }>();
-    const patient = patients.patient;
+import { useStateValue } from "../state";
+import { Icon, Container, Header, List } from "semantic-ui-react";
 
+const PatientPage = () => {
+    const [{ patient }, dispatch] = useStateValue();
+    const { id } = useParams<{ id: string }>();
     if (patient?.id !== id) {
         React.useEffect(() => {
             const fetchPatient = async () => {
@@ -18,17 +17,17 @@ const PatientPage = () => {
                         `${apiBaseUrl}/patients/${id}`
                     );
                     dispatch({ type: "SET_PATIENT", payload: patientFromApi });
-                    console.log(setPatientPage(patientFromApi));
                 } catch (e) {
-                    console.error(e.message);
+                    console.error(e);
                 }
             };
             void fetchPatient();
         }, []);
     }
 
-    const genderIcon = (gender: string): JSX.Element => {
-        switch (gender) {
+    /**@param gender Gender type, Icon is set based on result */
+    const genderIcon = (): JSX.Element => {
+        switch (patient?.gender) {
             case "male":
                 return <Icon name="mars" />;
             case "female":
@@ -38,17 +37,117 @@ const PatientPage = () => {
         }
     };
 
+    const assertNever = (value: never): never => {
+        throw new Error(
+            `Unhandled discriminated union member: ${JSON.stringify(value)}`
+        );
+    };
+
+    const renderEntries = () => {
+        const [{ diagnoses }] = useStateValue();
+
+        const renderHeart = (rating: number) => {
+            switch (rating) {
+                case 0:
+                    return <Icon name="heart" color="green" />;
+                case 1:
+                    return <Icon name="heart" color="yellow" />;
+                case 2:
+                    return <Icon name="heart" color="orange" />;
+                case 3:
+                    return <Icon name="heart" color="red" />;
+            }
+        };
+
+        return (
+            <div>
+                <h2>entries</h2>
+                {patient?.entries?.map((entry) => {
+                    switch (entry.type) {
+                        case "OccupationalHealthcare":
+                            return (
+                                <div>
+                                    <Container fluid>
+                                        <Header as="h3">
+                                            {entry.date}{" "}
+                                            <Icon name="stethoscope" />{" "}
+                                            {entry.employerName}
+                                        </Header>{" "}
+                                        <em>{entry.description}</em>
+                                        <List bulleted>
+                                            {entry.diagnosisCodes?.map(
+                                                (code) => (
+                                                    <List.Item key={code}>
+                                                        {code}{" "}
+                                                        {diagnoses[code]
+                                                            ? diagnoses[code]
+                                                                  .name
+                                                            : null}
+                                                    </List.Item>
+                                                )
+                                            )}
+                                        </List>
+                                    </Container>
+                                </div>
+                            );
+                        case "Hospital":
+                            return (
+                                <div>
+                                    <Header as="h3">
+                                        {entry.date} <Icon name="hospital" />
+                                    </Header>{" "}
+                                    <em>{entry.description}</em>
+                                    <List bulleted>
+                                        {entry.diagnosisCodes?.map((code) => (
+                                            <List.Item key={code}>
+                                                {code}{" "}
+                                                {diagnoses[code]
+                                                    ? diagnoses[code].name
+                                                    : null}
+                                            </List.Item>
+                                        ))}
+                                    </List>
+                                </div>
+                            );
+                        case "HealthCheck":
+                            return (
+                                <div>
+                                    <Header as="h3">
+                                        {entry.date} <Icon name="doctor" />
+                                    </Header>
+                                    <em>{entry.description}</em>
+                                    <List bulleted>
+                                        {entry.diagnosisCodes?.map((code) => (
+                                            <List.Item key={code}>
+                                                {code}{" "}
+                                                {diagnoses[code]
+                                                    ? diagnoses[code].name
+                                                    : null}
+                                            </List.Item>
+                                        ))}
+                                    </List>
+                                    {renderHeart(entry.healthCheckRating)}
+                                </div>
+                            );
+                        default:
+                            assertNever(entry);
+                    }
+                })}
+            </div>
+        );
+    };
+
     return (
         <>
             {patient ? (
                 <div>
                     <h1>
                         {patient?.name}&nbsp;
-                        {genderIcon(patient?.gender)}
+                        {genderIcon()}
                     </h1>
                     <div>ssn:&nbsp;{patient?.ssn}</div>
                     <div>occupation:&nbsp;{patient?.occupation}</div>
-                    <div>date of birth:&nbsp;{patient?.dateOfBirth}</div>
+                    {patient?.entries.length !== 0 ? renderEntries() : null}
                 </div>
             ) : (
                 "Loading patient, please wait..."

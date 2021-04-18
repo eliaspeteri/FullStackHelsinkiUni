@@ -10,12 +10,22 @@ export enum Gender {
     Other = "other",
 }
 
+export type Patient = {
+    id: string;
+    name: string;
+    ssn: string;
+    occupation: string;
+    gender: Gender;
+    dateOfBirth: string;
+    entries: Entry[];
+};
+
 export type Entry =
     | HospitalEntry
     | OccupationalHealthcareEntry
     | HealthCheckEntry;
 
-export interface BaseEntry {
+interface BaseEntry {
     id: string;
     description: string;
     date: string;
@@ -41,7 +51,7 @@ interface HospitalEntry extends BaseEntry {
 interface OccupationalHealthcareEntry extends BaseEntry {
     type: "OccupationalHealthcare";
     employerName: string;
-    sickLeave: {
+    sickLeave?: {
         startDate: string;
         endDate: string;
     };
@@ -51,16 +61,6 @@ interface HealthCheckEntry extends BaseEntry {
     type: "HealthCheck";
     healthCheckRating: HealthCheckRating;
 }
-
-export type Patient = {
-    id: string;
-    name: string;
-    ssn: string;
-    occupation: string;
-    gender: Gender;
-    dateOfBirth: string;
-    entries: BaseEntry[];
-};
 
 export type PatientSafe = Omit<Patient, "ssn" | "entries">;
 
