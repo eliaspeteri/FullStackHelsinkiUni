@@ -6,18 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const diagnoses_1 = __importDefault(require("./routes/diagnoses"));
 const patients_1 = __importDefault(require("./routes/patients"));
-// const cors = require("cors");
 const app = express_1.default();
 app.use(express_1.default.json());
-// app.use(cors);
 const PORT = 3001;
-// app.use((_req, res) => {
-// res.header("Access-Control-Allow-Origin", "*");
-// res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept"
-// );
-// });
 app.get("/api/ping", (_req, res) => {
     console.log("someone pinged here");
     res.send("pong");

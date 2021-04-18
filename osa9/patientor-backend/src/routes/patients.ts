@@ -4,8 +4,13 @@ import toNewPatientEntry from "../utils";
 
 const router = express.Router();
 
-router.get("/", (_req, res) => {
-    res.send(patientService.getNonSensitiveEntries());
+// TODO REMOVE THIS
+//! Remember to remove the sensitive entry query when building for production
+router.get("/", (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    Boolean(req.query.sensitive) === true
+        ? res.send(patientService.getEntries())
+        : res.send(patientService.getNonSensitiveEntries());
 });
 
 router.get("/:id", (req, res) => {

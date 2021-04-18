@@ -4,9 +4,6 @@ GET http://localhost:3001/api/ping
 ### Patients
 GET http://localhost:3001/api/patients
 
-### Patients sensitive information
-GET http://localhost:3001/api/patients?sensitive=true
-
 ### Patient By ID
 GET http://localhost:3001/api/patients/d2773336-f723-11e9-8f0b-362b9e155667
 

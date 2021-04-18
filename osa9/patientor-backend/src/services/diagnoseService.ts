@@ -1,4 +1,4 @@
-import diagnoses from "../data/diagnoses";
+import diagnoses from "../data/diagnoses.json";
 
 import { Diagnose } from "../types";
 
