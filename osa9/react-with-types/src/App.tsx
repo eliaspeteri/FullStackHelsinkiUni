@@ -9,9 +9,9 @@ const App = () => {
 
     return (
         <div>
-            <Header name={courseName} />
-            <Content courseParts={courseParts} />
-            <Total courseParts={courseParts} />
+            <Header courseName={courseName} courseParts={courseParts} />
+            <Content courseName={courseName} courseParts={courseParts} />
+            <Total courseName={courseName} courseParts={courseParts} />
         </div>
     );
 };

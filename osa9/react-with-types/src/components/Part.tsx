@@ -1,38 +1,39 @@
 import React from "react";
-import { Props } from "../types";
+import { CoursePart } from "../types";
 
 /**@param name Course name @param exerciseCount Number of exercises in a course @param description Course description */
-const Part = (props: Props): JSX.Element => {
-    const requirements = (requirements: Array<string>) => (
-        <div>
-            required skills:{" "}
-            {requirements.map((requirement) => (
-                <span key={requirement}>{requirement} </span>
-            ))}
-        </div>
-    );
+const Part = (coursePart: CoursePart): JSX.Element => {
     return (
         <p>
             <strong>
-                {props.name} {props.exerciseCount}
+                {coursePart.name} {coursePart.exerciseCount}
             </strong>
             <br />
-            <em>{props.description}</em>
+            <em>{coursePart.description}</em>
 
-            {props.groupProjectCount ? (
+            {coursePart.type === "groupProject" ? (
                 <span>
                     <b />
-                    {`project exercises ${props.groupProjectCount}`}
+                    {`project exercises ${coursePart.groupProjectCount}`}
                 </span>
             ) : null}
 
-            {props.link ? (
+            {coursePart.type === "submission" ? (
                 <span>
                     <br />
-                    submit to {props.link}
+                    submit to {coursePart.exerciseSubmissionLink}
                 </span>
             ) : null}
-            {props.requirements ? requirements(props.requirements) : null}
+            {coursePart.type === "special" ? (
+                <div>
+                    required skills:{" "}
+                    {coursePart.requirements !== undefined
+                        ? coursePart.requirements.map((requirement) => (
+                              <span key={requirement}>{requirement} </span>
+                          ))
+                        : null}
+                </div>
+            ) : null}
         </p>
     );
 };

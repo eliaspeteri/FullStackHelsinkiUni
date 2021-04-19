@@ -1,21 +1,12 @@
 export interface Props {
-    name?: string;
+    courseName?: string;
     courseParts?: CoursePart[];
-    exerciseCount?: number;
-    description?: string;
-    groupProjectCount?: number;
-    link?: string;
-    requirements?: string[];
 }
 
 interface CoursePartBase {
     name: string;
     exerciseCount: number;
     description?: string;
-    type: string;
-    groupProjectCount?: number;
-    exerciseSubmissionLink?: string;
-    requirements?: string[];
 }
 
 interface CourseNormalPart extends CoursePartBase {
@@ -24,20 +15,21 @@ interface CourseNormalPart extends CoursePartBase {
 
 interface CourseProjectPart extends CoursePartBase {
     type: "groupProject";
-    groupProjectCount: number;
+    groupProjectCount?: number;
 }
 
 interface CourseSubmissionPart extends CoursePartBase {
     type: "submission";
-    exerciseSubmissionLink: string;
+    exerciseSubmissionLink?: string;
 }
 
-interface CourseRequirementsPart extends CoursePartBase {
-    requirements: string[];
+interface CourseSpecialPart extends CoursePartBase {
+    type: "special";
+    requirements?: string[];
 }
 
 export type CoursePart =
     | CourseNormalPart
     | CourseProjectPart
     | CourseSubmissionPart
-    | CourseRequirementsPart;
+    | CourseSpecialPart;
